@@ -12,6 +12,9 @@ filter.addEventListener('keyup', filterItems);
 // add item
 function addItem(e){
     e.preventDefault();
+    const inputValue=document.getElementById('item').value;
+    const description=document.getElementById('description').value;
+
 
     // get inpu value;
     var newItem=document.getElementById('item').value;
@@ -19,6 +22,11 @@ function addItem(e){
     var li=document.createElement('li');
     // add  class
     li.className='list-group-item';
+    const newText=document.createTextNode(inputValue);
+    const descriptionNode =document.createTextNode(" " + description);
+
+    li.appendChild(newText);
+    li.appendChild(descriptionNode);
     // console.log(li); 
     //  add text node with input value
     li.appendChild(document.createTextNode(newItem));
@@ -33,18 +41,6 @@ function addItem(e){
     li.appendChild(deleteBtn);
     // Append li to list
     itemList.appendChild(li);
-
-  //  create the delete Button element
-  var deleteBtn = document.createElement('button');
-  // Add classes to delete button
-//   deleteBtn.className='btn btn-danger btn-sm float-righr delete';
-  // Append Text Node
-  deleteBtn.appendChild(document.createTextNode('Edit'));
-  // append button to li
-  li.appendChild(deleteBtn);
-  // Append li to list
-  itemList.appendChild(li);
-
 
 }
 // console.log(form);
@@ -61,7 +57,20 @@ if(e.target.classList.contains('delete')){
 function filterItems(e){
     //  converts to lowecase
     var text=e.target.value.toLowerCase();
-    console.log(text);
-}
+    // console.log(text);
+    // GEt li's
+   var items = itemList.getElementsByTagName('li');
+// convert to an array
+Array.from(items).forEach(function(item){
+    var itemName = item.firstChild.textContent;
+    // console.log(itemName);
+    if(itemName.toLowerCase().indexOf(text)!=-1){
+        item.style.display="block";
 
+    }
+    else{
+        item.style.display="none";
+    }
+});
+}
 
